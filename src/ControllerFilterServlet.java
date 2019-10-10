@@ -1,12 +1,7 @@
 import javax.servlet.*;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-
-@WebServlet(name = "ControllerFilterServlet", urlPatterns = "/ControllerFilterServlet")
 
 public class ControllerFilterServlet implements Filter {
     @Override
@@ -31,20 +26,17 @@ public class ControllerFilterServlet implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
 
-        if (!(isNumeric(x)) || !(isNumeric(y)) || !(isNumeric(r))) {
+        if ((isNumeric(x)) || (isNumeric(y)) || (isNumeric(r))) {
 
-            resp.sendRedirect(req.getContextPath() + "/index.jsp");
+            double xNumber = Double.parseDouble(x);
+            double yNumber = Double.parseDouble(y);
+            double rNumber = Double.parseDouble(r);
+
+            if ((rNumber <= 6 && rNumber >= 1) && (yNumber >= -5 && 5 >= yNumber) && (xNumber >= -2 && 2 >= xNumber))
+                filterChain.doFilter(servletRequest, servletResponse);
 
         } else {
-                double xNumber = Double.parseDouble(x);
-                double yNumber = Double.parseDouble(y);
-                double rNumber = Double.parseDouble(r);
-
-                if ((rNumber <= 6 && rNumber >= 1) && (yNumber >= -5 && 5 >= yNumber) && (xNumber >= -2 && 2 >= xNumber))
-                    filterChain.doFilter(servletRequest, servletResponse);
-                else {
-                    resp.sendRedirect(req.getContextPath() + "/index.jsp");
-                }
+            resp.sendRedirect(req.getContextPath() + "/index.jsp");
         }
     }
 
