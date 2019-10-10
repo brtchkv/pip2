@@ -31,10 +31,6 @@ public class AreaCheckServlet extends HttpServlet {
         }
 
 
-//        if (history.getAttribute("coord") != null) {
-//            coordinates = gson.fromJson((String) history.getAttribute("coord"), type);
-//        }
-
         Date endTime = new Date();
         double execute = endTime.getTime() - startTime.getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm:ss");
@@ -43,7 +39,6 @@ public class AreaCheckServlet extends HttpServlet {
 
         String cord = gson.toJson(coordinate);
         System.out.println(cord);
-//        history.setAttribute("coord", coord);
         resp.sendRedirect(req.getContextPath() + "/index.jsp");
     }
 
