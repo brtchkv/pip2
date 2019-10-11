@@ -5,39 +5,21 @@ Date: 2019-10-09
 Time: 21:50
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="com.google.gson.Gson" %>
 <%@ page import="java.util.Vector" %>
 <%@ page import="servlets.Coordinate" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=utf-8" language="java" %>
 
 <%
-    StringBuilder builder = new StringBuilder();
     StringBuilder builderHistoryForGraph = new StringBuilder();
-    builderHistoryForGraph.append('[');
-    Vector<String> coordinates = new Vector<>();
+    Vector<Coordinate> coordinates = new Vector<>();
     ServletContext context = request.getServletContext();
-    Gson gson = new Gson();
     if (context.getAttribute("userData") != null) {
-        coordinates = (Vector<String>) context.getAttribute("userData");
+        coordinates = (Vector<Coordinate>) context.getAttribute("userData");
     }
 
-    Iterator value = coordinates.iterator();
-    while (value.hasNext()) {
-        String elementJson = (String)value.next();
-        Coordinate element = gson.fromJson(elementJson, Coordinate.class);
+    for (Coordinate element : coordinates) {
         builderHistoryForGraph.append("{'x':'" + element.getX() + "','y':'" + element.getY() + "','r':'" + element.getR()
-        + "','correct':'" + element.getCorrect() + "'}" + (value.hasNext() ? "," : "]"));
-        builder.append("<tr><td width=\"26%\">");
-        builder.append("<span title=\"'" + element.getX() + "\">" + element.editOutput(element.getX()).replace(".", ",") + "</span>");
-        builder.append("</td><td width=\"26%\">");
-        builder.append("<span title=\"'" + element.getY() + "\">" + element.editOutput(element.getY()).replace(".", ",") + "</span>");
-        builder.append("</td><td width=\"26%\">");
-        builder.append("<span title=\"'" + element.getR() + "\">" + Math.round(element.getR()) + "</span>");
-        builder.append("</td><td width=\"26%\">");
-        builder.append( element.getCorrect() ? "<p style=\"color:#008000;text-align:center;\">Попал</p>" : "<p width=\"28%\" style=\"color:#B22222;text-align:center;\">Мимо</p>");
-        builder.append("</td><td width=\"26%\">");
-        builder.append("</td></tr>");
+                + "','correct':'" + element.getCorrect() + "'},");
     }
 
 %>
@@ -292,9 +274,18 @@ To change this template use File | Settings | File Templates.
             </thead>
 
             <tbody id="tableBody">
-            <%
-                out.println(builder.toString());
-            %>
+            <%for (Coordinate element : coordinates) {%>
+            <tr><td width="26%">
+                <span title =" <%=element.getX()%> "> <%= element.editOutput(element.getX()).replace(".", ",")%> </span>
+            </td><td width="26%">
+                <span title =" <%=element.getY()%> "> <%= element.editOutput(element.getY()).replace(".", ",")%> </span>
+            </td><td width="26%">
+                <span title =" <%=element.getY()%> "> <%= Math.round(element.getR())%> </span>
+            </td><td width="26%">
+                <p style="color:<%=element.getColor()%>;text-align:center;"> <%=element.getCorrectWords()%> </p>
+            </td><td width="26%">
+            </td></tr>
+            <%} %>
             </tbody>
         </table>
     </div>

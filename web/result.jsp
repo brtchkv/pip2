@@ -5,21 +5,16 @@ Date: 2019-10-09
 Time: 21:50
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page import="com.google.gson.Gson" %>
 <%@ page import="java.util.Vector" %>
 <%@ page import="servlets.Coordinate" %>
-<%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=utf-8" language="java" %>
 
 <%
-    StringBuilder builder = new StringBuilder();
-    Vector<String> coordinates = new Vector<>();
+    Vector<Coordinate> coordinates = new Vector<>();
     ServletContext context = request.getServletContext();
-    Gson gson = new Gson();
     if (context.getAttribute("userData") != null) {
-        coordinates = (Vector<String>) context.getAttribute("userData");
+        coordinates = (Vector<Coordinate>) context.getAttribute("userData");
     }
-
 %>
 
 <!DOCTYPE html>
@@ -53,12 +48,11 @@ To change this template use File | Settings | File Templates.
                 <td class="etRect">
                     <span style="font-size: 18px;">Время исполнения</span>
                     <p>
-<%
-    if (coordinates.size() != 0){
-        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-        out.println("<span style='text-align:center;' title=\"" + lastElement.getExecutionTime() + "\">" + lastElement.getExecutionTime()/1000 + " мкс" + "</span>");
-    }
-%>
+    <%  if (coordinates.size() != 0){%>
+        <span style='text-align:center;' title="<%=coordinates.lastElement().getExecutionTime()%>">
+                <%=coordinates.lastElement().getExecutionTime()/1000 %> мкс
+        </span>
+        <%} %>
                     </p>
                 </td>
                 <td>
@@ -68,30 +62,31 @@ To change this template use File | Settings | File Templates.
                                 <span class="parameters" style="font-size: 18px;">X</span>
                                 <%
                                     if (coordinates.size() != 0){
-                                        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getX() + "\">" + lastElement.editOutput(lastElement.getX()).replace(".", ",") + "</span>");
-                                    }
-                                %>
+                                         %>
+                                        <span style='text-align:center;' title="<%= coordinates.lastElement().getX()%>">
+                                            <%= coordinates.lastElement().editOutput(coordinates.lastElement().getX()).replace(".", ",")%>
+                                        </span>
+                                <%}%>
                             </td>
                             <td style="padding:0 5px 0 5px;"></td>
                             <td class="xRect">
                                 <span class="parameters" style="font-size: 18px;">Y</span>
                                 <%
-                                    if (coordinates.size() != 0){
-                                        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getY() + "\">" + lastElement.editOutput(lastElement.getY()).replace(".", ",") + "</span>");
-                                    }
-                                %>
+                                if (coordinates.size() != 0){ %>
+                                    <span style='text-align:center;' title="<%= coordinates.lastElement().getY()%>">
+                                            <%= coordinates.lastElement().editOutput(coordinates.lastElement().getY()).replace(".", ",")%>
+                                    </span>
+                                <%}%>
                             </td>
                             <td style="padding:0 5px 0 5px;"></td>
                             <td class="rRect">
                                 <span class="parameters" style="font-size: 18px;">R</span>
                                 <%
-                                    if (coordinates.size() != 0){
-                                        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getR() + "\">" + lastElement.editOutput(lastElement.getR()).replace(".", ",") + "</span>");
-                                    }
-                                %>
+                                    if (coordinates.size() != 0){ %>
+                                    <span style='text-align:center;' title="<%= coordinates.lastElement().getR()%>">
+                                            <%= coordinates.lastElement().editOutput(coordinates.lastElement().getR()).replace(".", ",")%>
+                                    </span>
+                                <%}%>
                             </td>
                         </tr>
                     </table>
@@ -115,12 +110,11 @@ To change this template use File | Settings | File Templates.
                     <span style="font-size: 18px;">Результат</span>
                     <%
                         if (coordinates.size() != 0){
-                            Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-                            if (lastElement.getCorrect()) {
-                                out.println( "<p style=\"color:#008000;text-align:center;\">Попал!</p>");
-                            } else {
-                                out.println("<p style=\"color:#B22222;text-align:center;\">Мимо :(</p>");
-                            }
+                            if (coordinates.lastElement().getCorrect()) { %>
+                                <p style="color:#008000;text-align:center;">Попал!</p>
+                    <%  } else { %>
+                                <p style="color:#B22222;text-align:center;">Мимо :(</p>
+                    <%      }
                         }
                     %>
                 </td>
@@ -139,22 +133,18 @@ To change this template use File | Settings | File Templates.
                 </thead>
 
                 <tbody id="tableBody">
-                    <%
-                        Iterator value = coordinates.iterator();
-                        while (value.hasNext()) {
-                            Coordinate element = gson.fromJson((String)value.next(), Coordinate.class);
-                            builder.append("<tr><td width=\"134px\">");
-                            builder.append("<span title=\"'" + element.getX() + "\">" + element.editOutput(element.getX()).replace(".", ",") + "</span>");
-                            builder.append("</td><td width=\"134px\">");
-                            builder.append("<span title=\"'" + element.getY() + "\">" + element.editOutput(element.getY()).replace(".", ",") + "</span>");
-                            builder.append("</td><td width=\"134px\">");
-                            builder.append("<span title=\"'" + element.getR() + "\">" + Math.round(element.getR()) + "</span>");
-                            builder.append("</td><td width=\"134px\">");
-                            builder.append( element.getCorrect() ? "<p style=\"color:#008000;text-align:center;\">Попал</p>" : "<p style=\"color:#B22222;text-align:center;\">Мимо</p>");
-                            builder.append("</td></tr>");
-                        }
-                        out.println(builder.toString());
-                    %>
+                    <%for (Coordinate element : coordinates) { %>
+
+                            <tr><td width="134px">
+                                <span title =" <%=element.getX()%> "> <%= element.editOutput(element.getX()).replace(".", ",")%> </span>
+                            </td><td width="134px">
+                                <span title =" <%=element.getY()%> "> <%= element.editOutput(element.getY()).replace(".", ",")%> </span>
+                            </td><td width="134px">
+                                <span title =" <%=element.getY()%> "> <%= Math.round(element.getR())%> </span>
+                            </td><td width="134px">
+                                <p style="color:<%=element.getColor()%>;text-align:center;"> <%=element.getCorrectWords()%> </p>
+                            </td></tr>
+                    <%} %>
                 </tbody>
             </table>
         </div>

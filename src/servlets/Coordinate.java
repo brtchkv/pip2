@@ -75,4 +75,18 @@ public class Coordinate {
     public void setCorrect(boolean correct) {
         this.correct = correct;
     }
+
+    public String getCorrectWords() {
+        if (correct){
+            return "Попал";
+        }
+        return "Мимо";
+    }
+
+    public String getColor() {
+        if (correct){
+            return "#008000";
+        }
+        return "#B22222";
+    }
 }
