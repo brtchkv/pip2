@@ -8,6 +8,7 @@ To change this template use File | Settings | File Templates.
 <%@ page import="com.google.gson.Gson" %>
 <%@ page import="java.util.Vector" %>
 <%@ page import="servlets.Coordinate" %>
+<%@ page import="java.util.Iterator" %>
 <%@ page contentType="text/html;charset=utf-8" language="java" %>
 
 <%
@@ -68,7 +69,7 @@ To change this template use File | Settings | File Templates.
                                 <%
                                     if (coordinates.size() != 0){
                                         Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getX() + "\">" + lastElement.editOutput(lastElement.getX()) + "</span>");
+                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getX() + "\">" + lastElement.editOutput(lastElement.getX()).replace(".", ",") + "</span>");
                                     }
                                 %>
                             </td>
@@ -78,7 +79,7 @@ To change this template use File | Settings | File Templates.
                                 <%
                                     if (coordinates.size() != 0){
                                         Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getY() + "\">" + lastElement.editOutput(lastElement.getY()) + "</span>");
+                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getY() + "\">" + lastElement.editOutput(lastElement.getY()).replace(".", ",") + "</span>");
                                     }
                                 %>
                             </td>
@@ -88,7 +89,7 @@ To change this template use File | Settings | File Templates.
                                 <%
                                     if (coordinates.size() != 0){
                                         Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
-                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getR() + "\">" + lastElement.editOutput(lastElement.getR()) + "</span>");
+                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getR() + "\">" + lastElement.editOutput(lastElement.getR()).replace(".", ",") + "</span>");
                                     }
                                 %>
                             </td>
@@ -138,7 +139,22 @@ To change this template use File | Settings | File Templates.
                 </thead>
 
                 <tbody id="tableBody">
-
+                    <%
+                        Iterator value = coordinates.iterator();
+                        while (value.hasNext()) {
+                            Coordinate element = gson.fromJson((String)value.next(), Coordinate.class);
+                            builder.append("<tr><td width=\"134px\">");
+                            builder.append("<span title=\"'" + element.getX() + "\">" + element.editOutput(element.getX()).replace(".", ",") + "</span>");
+                            builder.append("</td><td width=\"134px\">");
+                            builder.append("<span title=\"'" + element.getY() + "\">" + element.editOutput(element.getY()).replace(".", ",") + "</span>");
+                            builder.append("</td><td width=\"134px\">");
+                            builder.append("<span title=\"'" + element.getR() + "\">" + element.getR().replace(".", ",") + "</span>");
+                            builder.append("</td><td width=\"134px\">");
+                            builder.append( element.getCorrect() ? "<p style=\"color:#008000;text-align:center;\">Попал</p>" : "<p style=\"color:#B22222;text-align:center;\">Мимо</p>");
+                            builder.append("</td></tr>");
+                        }
+                        out.println(builder.toString());
+                    %>
                 </tbody>
             </table>
         </div>

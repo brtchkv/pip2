@@ -45,7 +45,6 @@ public class AreaCheckServlet extends HttpServlet {
 
         String cord = gson.toJson(coordinate);
         ServletContext context = req.getSession().getServletContext();
-        coordinatesCollection.add(cord);
 
         Object attribute = context.getAttribute("userData");
 
