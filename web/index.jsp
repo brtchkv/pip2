@@ -22,7 +22,7 @@ To change this template use File | Settings | File Templates.
 <!-- 	min: 950x640   -->
 <div class="background">
 <main class="mainRect animated zoomIn fast">
-    <form action="ControllerServlet" id="form" method="GET">
+    <form action="validate" id="form" method="GET">
         <input autocomplete="off" id="xValue" name="x" type="hidden" value="">
         <div class="inputFields">
             <div class="task taskRect">

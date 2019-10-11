@@ -5,11 +5,22 @@ Date: 2019-10-09
 Time: 21:50
 To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ page import="com.google.gson.Gson" %>
-<%@ page import="Coordinate" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page import="java.util.Vector" %>
+<%@ page import="servlets.Coordinate" %>
+<%@ page contentType="text/html;charset=utf-8" language="java" %>
+
+<%
+    StringBuilder builder = new StringBuilder();
+    Vector<String> coordinates = new Vector<>();
+    ServletContext context = request.getServletContext();
+    Gson gson = new Gson();
+    if (context.getAttribute("userData") != null) {
+        coordinates = (Vector<String>) context.getAttribute("userData");
+    }
+
+%>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -27,7 +38,7 @@ To change this template use File | Settings | File Templates.
 
     <main class="animated zoomIn fast">
         <table id="tableResponse" cellspacing="15">
-            <a href="index.html" class="close">
+            <a href="index.jsp" class="close">
                 <script>
                     $(function () {
                         $('a').click(function (e) {
@@ -41,7 +52,12 @@ To change this template use File | Settings | File Templates.
                 <td class="etRect">
                     <span style="font-size: 18px;">Время исполнения</span>
                     <p>
-
+<%
+    if (coordinates.size() != 0){
+        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
+        out.println("<span style='text-align:center;' title=\"" + lastElement.getExecutionTime() + "\">" + lastElement.getExecutionTime()/1000 + " мкс" + "</span>");
+    }
+%>
                     </p>
                 </td>
                 <td>
@@ -49,17 +65,32 @@ To change this template use File | Settings | File Templates.
                         <tr>
                             <td class="yRect">
                                 <span class="parameters" style="font-size: 18px;">X</span>
-
+                                <%
+                                    if (coordinates.size() != 0){
+                                        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
+                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getX() + "\">" + lastElement.editOutput(lastElement.getX()) + "</span>");
+                                    }
+                                %>
                             </td>
                             <td style="padding:0 5px 0 5px;"></td>
                             <td class="xRect">
                                 <span class="parameters" style="font-size: 18px;">Y</span>
-
+                                <%
+                                    if (coordinates.size() != 0){
+                                        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
+                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getY() + "\">" + lastElement.editOutput(lastElement.getY()) + "</span>");
+                                    }
+                                %>
                             </td>
                             <td style="padding:0 5px 0 5px;"></td>
                             <td class="rRect">
                                 <span class="parameters" style="font-size: 18px;">R</span>
-
+                                <%
+                                    if (coordinates.size() != 0){
+                                        Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
+                                        out.println("<span style='text-align:center;' title=\"" + lastElement.getR() + "\">" + lastElement.editOutput(lastElement.getR()) + "</span>");
+                                    }
+                                %>
                             </td>
                         </tr>
                     </table>
@@ -81,7 +112,16 @@ To change this template use File | Settings | File Templates.
                 </td>
                 <td class="resultRect">
                     <span style="font-size: 18px;">Результат</span>
-
+                    <%
+                        if (coordinates.size() != 0){
+                            Coordinate lastElement = gson.fromJson(coordinates.lastElement(), Coordinate.class);
+                            if (lastElement.getCorrect()) {
+                                out.println( "<p style=\"color:#008000;text-align:center;\">Попал!</p>");
+                            } else {
+                                out.println("<p style=\"color:#B22222;text-align:center;\">Мимо :(</p>");
+                            }
+                        }
+                    %>
                 </td>
             </tr>
             </tbody>
