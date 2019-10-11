@@ -44,13 +44,18 @@ $(document).ready(function () {
     let width = canvas.width();
     let height = canvas.height();
 
-    if (sessionStorage.userData) {
-        userAttempts = sessionStorage.getItem('userData');
+    if ($("#canvas").attr('history')) {
+        userAttempts = $("#canvas").attr('history');
+        console.log(userAttempts);
         while (curMatch = rxp.exec(userAttempts)) {
-            obj = JSON.parse("{" + curMatch[1] + "}");
+            console.log(curMatch[1].replace(
+                /'/g, "\""));
+            obj = JSON.parse("{" + curMatch[1].replace(
+                /'/g, "\"") + "}");
             let x = (width * (2 * obj.x + 2.7 * obj.r)) / (5.4 * obj.r);
             let y = (height * (2.7 * obj.r - 2 * obj.y)) / (5.4 * obj.r);
-            drawCircle(x, y, obj.result);
+
+            drawCircle(x, y, obj.correct);
         }
     }
 

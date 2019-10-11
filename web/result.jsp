@@ -148,7 +148,7 @@ To change this template use File | Settings | File Templates.
                             builder.append("</td><td width=\"134px\">");
                             builder.append("<span title=\"'" + element.getY() + "\">" + element.editOutput(element.getY()).replace(".", ",") + "</span>");
                             builder.append("</td><td width=\"134px\">");
-                            builder.append("<span title=\"'" + element.getR() + "\">" + element.getR().replace(".", ",") + "</span>");
+                            builder.append("<span title=\"'" + element.getR() + "\">" + Math.round(element.getR()) + "</span>");
                             builder.append("</td><td width=\"134px\">");
                             builder.append( element.getCorrect() ? "<p style=\"color:#008000;text-align:center;\">Попал</p>" : "<p style=\"color:#B22222;text-align:center;\">Мимо</p>");
                             builder.append("</td></tr>");

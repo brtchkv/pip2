@@ -16,19 +16,20 @@ public class ControllerFilterServlet implements Filter {
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        String x = getValidString(servletRequest.getParameter("x"));
-        String y = getValidString(servletRequest.getParameter("y"));
-        String r = getValidString(servletRequest.getParameter("r"));
+        String x = servletRequest.getParameter("x");
+        String y = servletRequest.getParameter("y");
+        String r = servletRequest.getParameter("r");
 
-        x = x.replace(',', '.');
-        y = y.replace(',', '.');
-        r = r.replace(',', '.');
 
         HttpServletRequest req = (HttpServletRequest) servletRequest;
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
 
-        if ((isNumeric(x)) || (isNumeric(y)) || (isNumeric(r))) {
+        if ((x != null && y != null && r != null) && ((isNumeric(x)) || (isNumeric(y)) || (isNumeric(r)))) {
+
+            x = x.replace(',', '.');
+            y = y.replace(',', '.');
+            r = r.replace(',', '.');
 
             double xNumber = Double.parseDouble(x);
             double yNumber = Double.parseDouble(y);
@@ -44,8 +45,5 @@ public class ControllerFilterServlet implements Filter {
 
     private static boolean isNumeric(String str) {
         return str.matches("-?\\d+(\\.\\d+)?");
-    }
-    private static String getValidString(String str){
-        return str == null ? "" : str;
     }
 }

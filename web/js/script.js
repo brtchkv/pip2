@@ -88,3 +88,17 @@ function hideTable() {
 
     document.getElementById("historyButton").onclick = showTable;
 }
+
+function showForm() {
+    $('#form').removeClass('hide');
+    $('#dataTable').addClass('hide');
+
+    document.getElementById("historyButton").onclick = hideForm;
+}
+
+function hideForm() {
+    $('#dataTable').removeClass('hide');
+    $('#form').addClass('hide');
+
+    document.getElementById("historyButton").onclick = showForm;
+}
