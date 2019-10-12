@@ -11,7 +11,7 @@ import java.util.Vector;
 
 @WebServlet(name = "AreaCheckServlet", urlPatterns = "/validate")
 public class AreaCheckServlet extends HttpServlet {
-    Vector<Coordinate> coordinatesCollection = new Vector<>();
+    private Vector<Coordinate> coordinatesCollection = new Vector<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -19,7 +19,6 @@ public class AreaCheckServlet extends HttpServlet {
         double x = Double.parseDouble(req.getParameter("x").replace(',', '.'));
         double y = Double.parseDouble(req.getParameter("y").replace(',', '.'));
         double r = Double.parseDouble(req.getParameter("r").replace(',', '.'));
-
 
         boolean correctCoordinate = false;
 

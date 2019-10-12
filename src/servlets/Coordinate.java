@@ -1,6 +1,7 @@
 package servlets;
 
-import org.decimal4j.util.DoubleRounder;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 public class Coordinate {
     private double x;
@@ -10,7 +11,7 @@ public class Coordinate {
     private long executionTime;
     private boolean correct;
 
-    public Coordinate(double x, double y, double r, String requestTime, long executionTime, boolean correct) {
+    Coordinate(double x, double y, double r, String requestTime, long executionTime, boolean correct) {
         this.x = x;
         this.y = y;
         this.r = r;
@@ -20,12 +21,16 @@ public class Coordinate {
     }
 
     public String editOutput(Double n){
+        DecimalFormat df = new DecimalFormat("###.##");
+        DecimalFormat kk = new DecimalFormat("###.#");
+        kk.setRoundingMode(RoundingMode.CEILING);
+        df.setRoundingMode(RoundingMode.CEILING);
         if (Math.abs(n) >= 1000000000000000.0){ return String.valueOf(n).substring( 0, 3) + "…";}
-        else if (Math.abs(n) >= 1000000000000.0){ return DoubleRounder.round((n / 1000000000000.0),1) + "k^4";}
-        else if (Math.abs(n) >= 1000000000) {return DoubleRounder.round((n / 1000000000),1) + "kkk";}
-        else if (Math.abs(n) >= 1000000) { return DoubleRounder.round((n / 1000000),1) + "kk";}
-        else if (Math.abs(n) >= 1000){ return DoubleRounder.round((n / 1000),1) + "k";}
-        else { return DoubleRounder.round(n, 1) + "";}
+        else if (Math.abs(n) >= 1000000000000.0){ return kk.format(n / 1000000000000.0) + "k^4";}
+        else if (Math.abs(n) >= 1000000000) {return kk.format(n / 1000000000) + "kkk";}
+        else if (Math.abs(n) >= 1000000) { return kk.format(n / 1000000) + "kk";}
+        else if (Math.abs(n) >= 1000){ return df.format(n / 1000) + "k";}
+        else { return df.format(n) + "";}
     }
 
     public double getX() {

@@ -1,6 +1,7 @@
 package servlets;
 
 import javax.servlet.*;
+import javax.servlet.FilterConfig;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,7 +16,10 @@ public class ControllerFilterServlet implements Filter {
     }
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain)
+            throws IOException, ServletException {
         String x = servletRequest.getParameter("x");
         String y = servletRequest.getParameter("y");
         String r = servletRequest.getParameter("r");
@@ -25,7 +29,7 @@ public class ControllerFilterServlet implements Filter {
         HttpServletResponse resp = (HttpServletResponse) servletResponse;
 
 
-        if ((x != null && y != null && r != null) && ((isNumeric(x)) || (isNumeric(y)) || (isNumeric(r)))) {
+        if (!(x == null || y == null || r == null) && (isNumeric(x) && isNumeric(y) && isNumeric(r))) {
 
             x = x.replace(',', '.');
             y = y.replace(',', '.');
