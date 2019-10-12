@@ -41,6 +41,7 @@ public class ControllerFilterServlet implements Filter {
 
             if ((rNumber <= 6 && rNumber >= 1) && (yNumber >= -5 && 5 >= yNumber) && (xNumber >= -2 && 2 >= xNumber))
                 filterChain.doFilter(servletRequest, servletResponse);
+            else resp.sendRedirect(req.getContextPath() + "/index.jsp");
 
         } else {
             resp.sendRedirect(req.getContextPath() + "/index.jsp");
