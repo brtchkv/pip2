@@ -11,10 +11,10 @@ import java.util.Vector;
 
 @WebServlet(name = "AreaCheckServlet", urlPatterns = "/validate")
 public class AreaCheckServlet extends HttpServlet {
-    private Vector<Coordinate> coordinatesCollection = new Vector<>();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        Vector<Coordinate> coordinatesCollection = new Vector<>();
         long startTime = System.nanoTime();
         double x = Double.parseDouble(req.getParameter("x").replace(',', '.'));
         double y = Double.parseDouble(req.getParameter("y").replace(',', '.'));

@@ -31,7 +31,6 @@ To change this template use File | Settings | File Templates.
 <body style="overflow:hidden;">
 <div class="background">
 
-
     <main class="animated zoomIn fast">
         <table id="tableResponse" cellspacing="15">
             <a href="index.jsp" class="close">
