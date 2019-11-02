@@ -4,4 +4,5 @@
 Second lab on the basis of [pip1](https://github.com/brtchkv/pip "Первая лабораторная работа")
 
 The Assignment:
-    ![alt-текст][screenshots/task.png "Текст задания"]
+
+   ![alt-текст](screenshots/task.png?raw=true "Текст задания")
