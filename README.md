@@ -1,7 +1,7 @@
 # pip2
-Лабораторная работа №2 на базе [pip1](https://github.com/brtchkv/pip "Первая лабораторная работа")
+Р›Р°Р±РѕСЂР°С‚РѕСЂРЅР°СЏ СЂР°Р±РѕС‚Р° в„–2 РЅР° Р±Р°Р·Рµ [pip1](https://github.com/brtchkv/pip "РџРµСЂРІР°СЏ Р»Р°Р±РѕСЂР°С‚РѕСЂРЅР°СЏ СЂР°Р±РѕС‚Р°")
 
-Second lab on the basis of [pip1](https://github.com/brtchkv/pip "Первая лабораторная работа")
+Second lab on the basis of [pip1](https://github.com/brtchkv/pip "РџРµСЂРІР°СЏ Р»Р°Р±РѕСЂР°С‚РѕСЂРЅР°СЏ СЂР°Р±РѕС‚Р°")
 
 The Assignment:
-    ![alt-текст][screenshots/task.png "Текст задания"]
+    ![alt-С‚РµРєСЃС‚][screenshots/task.png "РўРµРєСЃС‚ Р·Р°РґР°РЅРёСЏ"]
