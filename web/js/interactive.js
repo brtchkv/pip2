@@ -16,8 +16,8 @@ $(document).ready(function () {
         let relativeX = event.pageX - $('#canvas').offset().left;
         let relativeY = event.pageY - $('#canvas').offset().top;
 
-        let x = (relativeX - (width / 2)) / width * 2.7;
-        let y = ((height / 2) - relativeY) / height * 2.7;
+        let x = (relativeX - (width / 2)) / width * 3;
+        let y = ((height / 2) - relativeY) / height * 3;
         document.getElementById("y").value = (y * r).toFixed(2);
         document.getElementById("xValue").value = (x * r).toFixed(2);
 
@@ -52,8 +52,8 @@ $(document).ready(function () {
                 /'/g, "\""));
             obj = JSON.parse("{" + curMatch[1].replace(
                 /'/g, "\"") + "}");
-            let x = (width * (2 * obj.x + 2.7 * obj.r)) / (5.4 * obj.r);
-            let y = (height * (2.7 * obj.r - 2 * obj.y)) / (5.4 * obj.r);
+            let x = (width * (2 * obj.x + 3 * obj.r)) / (6 * obj.r);
+            let y = (height * (3 * obj.r - 2 * obj.y)) / (6 * obj.r);
 
             drawCircle(x, y, obj.correct);
         }
